@@ -16,10 +16,11 @@ services:
         max-size: "4m"
         max-file: "10"
     environment:
-      - VIRTUAL_HOST=portainer.example.com
+      - VIRTUAL_HOST=portainer.famnstigen.pvsweden.com
       - VIRTUAL_PORT=9000
-      - LETSENCRYPT_HOST=portainer.example.com
-      - LETSENCRYPT_EMAIL=you@youremail.com
+      - CERT_NAME=famnstigen.pvsweden.com
+      - LETSENCRYPT_HOST=portainer.famnstigen.pvsweden.com
+      - LETSENCRYPT_EMAIL=admin@pvsweden.com
 
 volumes:
   portainer_data:

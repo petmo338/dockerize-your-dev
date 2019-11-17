@@ -41,24 +41,35 @@ services:
         max-size: "2m"
         max-file: "10"
 
-  nginx-letsencrypt:
-    image: jrcs/letsencrypt-nginx-proxy-companion
-    container_name: nginx-letsencrypt
-    restart: always
-    volumes:
-      - conf:/etc/nginx/conf.d
-      - vhost:/etc/nginx/vhost.d
-      - html:/usr/share/nginx/html
-      - certs:/etc/nginx/certs:rw
-      - /var/run/docker.sock:/var/run/docker.sock:ro
+#  nginx-letsencrypt:
+#    image: jrcs/letsencrypt-nginx-proxy-companion
+#    container_name: nginx-letsencrypt
+#    restart: always
+#    volumes:
+#      - conf:/etc/nginx/conf.d
+#      - vhost:/etc/nginx/vhost.d
+#      - html:/usr/share/nginx/html
+#      - certs:/etc/nginx/certs:rw
+#      - /var/run/docker.sock:/var/run/docker.sock:ro
+#    environment:
+#      NGINX_DOCKER_GEN_CONTAINER: nginx-gen
+#      NGINX_PROXY_CONTAINER: nginx-web
+#    logging:
+#      driver: json-file
+#      options:
+#        max-size: "2m"
+#        max-file: "10"
+
+  le-godaddy-dns:
+    image: "uschti/le-godaddy-dns"
     environment:
-      NGINX_DOCKER_GEN_CONTAINER: nginx-gen
-      NGINX_PROXY_CONTAINER: nginx-web
-    logging:
-      driver: json-file
-      options:
-        max-size: "2m"
-        max-file: "10"
+      GD_KEY: dL3hLo9tEefn_sZaZ823pbGAvB5PiMLAGM
+      GD_SECRET: GTq4yzPtSxYmnXrX9XhVpT
+    volumes:
+      - certs:/data/certs
+      - certs:/data/keys
+      - ./proxy/renew_certificates.conf:/data/letsencrypt/renew_certificates.conf
+      - cert-data:/data/letsencrypt/dehydrated/certs
 
 volumes:
   conf:
@@ -66,7 +77,7 @@ volumes:
   html:
   certs:
   htpasswd:
-
+  cert-data:
 networks:
   default:
     external:

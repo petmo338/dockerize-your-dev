@@ -22,10 +22,11 @@ services:
     volumes:
       - sentry_data:/var/lib/sentry/files
     environment:
-      - VIRTUAL_HOST=sentry.example.com
+      - VIRTUAL_HOST=sentry.famnstigen.pvsweden.com
       - VIRTUAL_PORT=9000
-      - LETSENCRYPT_HOST=sentry.example.com
-      - LETSENCRYPT_EMAIL=you@youremail.com
+      - CERT_NAME=famnstigen.pvsweden.com
+      - LETSENCRYPT_HOST=sentry.famnstigen.pvsweden.com
+      - LETSENCRYPT_EMAIL=admin@pvsweden.com
 
   sentry-cron:
     image: 'sentry:latest'
