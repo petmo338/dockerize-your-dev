@@ -24,8 +24,9 @@ services:
     environment:
       - VIRTUAL_HOST=prometheus.example.com
       - VIRTUAL_PORT=9090
-      - LETSENCRYPT_HOST=prometheus.example.com
-      - LETSENCRYPT_EMAIL=you@youremail.com
+      - NETWORK_ACCESS=internal
+#      - LETSENCRYPT_HOST=prometheus.example.com
+#      - LETSENCRYPT_EMAIL=you@youremail.com
 
   cadvisor:
     build:
@@ -44,8 +45,9 @@ services:
     environment:
       - VIRTUAL_HOST=cadvisor.example.com
       - VIRTUAL_PORT=8080
-      - LETSENCRYPT_HOST=cadvisor.example.com
-      - LETSENCRYPT_EMAIL=you@youremail.com
+      - NETWORK_ACCESS=internal
+#      - LETSENCRYPT_HOST=cadvisor.example.com
+#      - LETSENCRYPT_EMAIL=you@youremail.com
 
   alertmanager:
     build:
@@ -65,8 +67,9 @@ services:
     environment:
       - VIRTUAL_HOST=alertmanager.example.com
       - VIRTUAL_PORT=9093
-      - LETSENCRYPT_HOST=alertmanager.example.com
-      - LETSENCRYPT_EMAIL=you@youremail.com
+      - NETWORK_ACCESS=internal
+#      - LETSENCRYPT_HOST=alertmanager.example.com
+#      - LETSENCRYPT_EMAIL=you@youremail.com
 
   node-exporter:
     build:
@@ -96,10 +99,10 @@ services:
     depends_on:
       - prometheus
     volumes:
-      - grafana:/var/lib/grafana
+      - /home/masteryoda/influxDocker/grafana:/var/lib/grafana
       - ./monitoring/grafana/config/provisioning/:/etc/grafana/provisioning/
-    env_file:
-      - ./monitoring/grafana/config/config.monitoring
+    # env_file:
+    #   - ./monitoring/grafana/config/config.monitoring
     restart: always
     logging:
       driver: json-file
@@ -107,10 +110,10 @@ services:
         max-size: "4m"
         max-file: "10"
     environment:
-      - VIRTUAL_HOST=grafana.example.com
+      - VIRTUAL_HOST=sensordata.sensic.se
       - VIRTUAL_PORT=3000
-      - LETSENCRYPT_HOST=grafana.example.com
-      - LETSENCRYPT_EMAIL=you@youremail.com
+      - LETSENCRYPT_HOST=sensordata.sensic.se
+      - LETSENCRYPT_EMAIL=peter.moller@sensic.se
 
 volumes:
   prometheus:
@@ -119,4 +122,4 @@ volumes:
 networks:
   default:
     external:
-      name: webproxy
+      name: sensicnet
